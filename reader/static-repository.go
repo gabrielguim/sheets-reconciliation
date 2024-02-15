@@ -1,7 +1,8 @@
-package repository
+package reader
 
 import (
 	"fmt"
+	"os"
 	"sheets-reconciliation/commons"
 	"sheets-reconciliation/reader/infra"
 	"sync"
@@ -9,10 +10,9 @@ import (
 
 type StaticAreaRepository struct{}
 
-const StaticFilePath = "/home/gabriel/pessoal/sheets-reconciliation/static/"
-
 func getFileName(area, kind string) string {
-	return fmt.Sprintf("%s%s_%s.csv", StaticFilePath, area, kind)
+	staticFilePath, _ := os.Getwd()
+	return fmt.Sprintf("%s/static/%s_%s.csv", staticFilePath, area, kind)
 }
 
 func getEntries(waitGroup *sync.WaitGroup, entries *[]commons.Entry, area, kind string) {

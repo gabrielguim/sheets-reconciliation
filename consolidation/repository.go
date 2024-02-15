@@ -1,9 +1,9 @@
-package repository
+package consolidation
 
 import (
 	"sheets-reconciliation/commons"
 )
 
-type DataRepository interface {
+type AreaRepository interface {
 	Read(areaName string) commons.Area
 }

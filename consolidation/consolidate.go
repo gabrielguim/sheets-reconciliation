@@ -1,9 +1,7 @@
-package use_case
+package consolidation
 
 import (
 	"sheets-reconciliation/commons"
-	"sheets-reconciliation/consolidation/model"
-	"sheets-reconciliation/consolidation/repository"
 	"sync"
 )
 
@@ -13,6 +11,16 @@ type ConsolidatedArea struct {
 	Balance  int64
 }
 
+func ConsolidateEntries(entries []commons.Entry) int64 {
+	sum := int64(0)
+
+	for _, entry := range entries {
+		sum += int64(entry.Value)
+	}
+
+	return sum
+}
+
 func dispatchConsolidation(area commons.Area) ConsolidatedArea {
 	areaWaitGroup := new(sync.WaitGroup)
 	areaWaitGroup.Add(2)
@@ -20,12 +28,12 @@ func dispatchConsolidation(area commons.Area) ConsolidatedArea {
 
 	go func() {
 		defer areaWaitGroup.Done()
-		payments = model.Consolidate(area.Payments)
+		payments = ConsolidateEntries(area.Payments)
 	}()
 
 	go func() {
 		defer areaWaitGroup.Done()
-		receipts = model.Consolidate(area.Receipts)
+		receipts = ConsolidateEntries(area.Receipts)
 	}()
 
 	areaWaitGroup.Wait()
@@ -37,7 +45,7 @@ func dispatchConsolidation(area commons.Area) ConsolidatedArea {
 	}
 }
 
-func ConsolidateArea(areaName string, repository repository.DataRepository) ConsolidatedArea {
+func ConsolidateArea(areaName string, repository AreaRepository) ConsolidatedArea {
 	area := repository.Read(areaName)
 	return dispatchConsolidation(area)
 }

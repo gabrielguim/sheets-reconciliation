@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	use_case "sheets-reconciliation/consolidation/use-case"
-	"sheets-reconciliation/reader/repository"
+	"sheets-reconciliation/consolidation"
+	"sheets-reconciliation/reader"
 )
 
 func main() {
-	staticAreaRepository := new(repository.StaticAreaRepository)
-	fmt.Println(use_case.ConsolidateArea("area1", staticAreaRepository))
+	staticAreaRepository := new(reader.StaticAreaRepository)
+	fmt.Println(consolidation.ConsolidateArea("area1", staticAreaRepository))
 }
