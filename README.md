@@ -1,3 +1,3 @@
 # sheets-reconciliation
-# sheets-reconciliation
-# sheets-reconciliation
+
+A simple sheets reconciliation project to learn golang!
