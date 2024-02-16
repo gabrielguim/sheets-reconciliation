@@ -1,7 +1,7 @@
 package consolidation
 
 import (
-	"sheets-reconciliation/commons"
+	"sheets-reconciliation/internal/commons"
 )
 
 type AreaRepository interface {

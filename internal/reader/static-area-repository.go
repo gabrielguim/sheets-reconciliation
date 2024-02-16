@@ -3,8 +3,8 @@ package reader
 import (
 	"fmt"
 	"os"
-	"sheets-reconciliation/commons"
-	"sheets-reconciliation/reader/infra"
+	"sheets-reconciliation/internal/commons"
+	"sheets-reconciliation/internal/reader/infra"
 	"sync"
 )
 

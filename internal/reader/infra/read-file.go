@@ -5,14 +5,14 @@ import (
 	"errors"
 	"log"
 	"os"
-	"sheets-reconciliation/commons"
+	"sheets-reconciliation/internal/commons"
 	"strconv"
 	"strings"
 )
 
 func closeFile(file *os.File) {
 	if err := file.Close(); err != nil {
-		log.Println("failed to close file: %v", err)
+		log.Printf("failed to close file: %v\n", err)
 	}
 }
 
