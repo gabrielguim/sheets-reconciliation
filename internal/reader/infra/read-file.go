@@ -2,12 +2,8 @@ package infra
 
 import (
 	"bufio"
-	"errors"
 	"log"
 	"os"
-	"sheets-reconciliation/internal/commons"
-	"strconv"
-	"strings"
 )
 
 func closeFile(file *os.File) {
@@ -16,25 +12,7 @@ func closeFile(file *os.File) {
 	}
 }
 
-func getEntry(row, delimiter string) (commons.Entry, error) {
-	values := strings.Split(row, delimiter)
-
-	if len(values) < 2 {
-		return commons.Entry{}, errors.New("invalid row")
-	}
-
-	rowValue, err := strconv.ParseUint(values[1], 0, 32)
-	if err != nil {
-		return commons.Entry{}, err
-	}
-
-	return commons.Entry{
-		Name:  values[0],
-		Value: uint32(rowValue),
-	}, nil
-}
-
-func ReadFileStream(fileName string, delimiter string, rowProcessor func(entry commons.Entry)) bool {
+func ReadFileStream(fileName string, rowProcessor func(row string)) bool {
 	file, err := os.Open(fileName)
 	if err != nil {
 		log.Fatal(err)
@@ -47,14 +25,7 @@ func ReadFileStream(fileName string, delimiter string, rowProcessor func(entry c
 	// jump first line
 	scanner.Scan()
 	for scanner.Scan() {
-		row := scanner.Text()
-		entry, err := getEntry(row, delimiter)
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		rowProcessor(entry)
+		rowProcessor(scanner.Text())
 	}
 
 	return true

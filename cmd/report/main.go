@@ -11,5 +11,4 @@ func main() {
 	fmt.Println(consolidation.ConsolidateArea("area1", staticAreaRepository))
 	fmt.Println(consolidation.ConsolidateArea("area2", staticAreaRepository))
 	fmt.Println(consolidation.ConsolidateArea("area3", staticAreaRepository))
-
 }
